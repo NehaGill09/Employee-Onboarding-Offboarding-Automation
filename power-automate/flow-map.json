@@ -1,0 +1,10 @@
+{
+  "solution": "PeopleFlowLifecycle",
+  "flows": [
+    {"name":"PF-01 Start onboarding","trigger":"Dataverse row added: LifecycleCase","condition":"CaseType == Onboarding","actions":["Validate required fields","Create task template rows","Notify HR, IT and manager","Write activity record"],"idempotency":"CaseId + templateVersion"},
+    {"name":"PF-02 Approval gate","trigger":"Task requires approval","actions":["Create approval","Wait for response","Persist decision","Notify requester","Write activity record"]},
+    {"name":"PF-03 Due-date reminders","trigger":"Scheduled recurrence","actions":["Find open due/overdue tasks","Group by owner","Send digest","Record reminder timestamp"]},
+    {"name":"PF-04 Start offboarding","trigger":"Dataverse row added: LifecycleCase","condition":"CaseType == Offboarding","actions":["Validate approved last day","Create handover and recovery tasks","Schedule access review/revocation","Notify HR, IT and manager"]},
+    {"name":"PF-05 Close lifecycle case","trigger":"Task status changed","actions":["Check all mandatory tasks","Check required approvals","Close case or notify owner","Write activity record"]}
+  ]
+}
